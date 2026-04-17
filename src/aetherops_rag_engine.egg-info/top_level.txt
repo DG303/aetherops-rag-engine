@@ -1,4 +1,0 @@
-indexer_app
-rag_core
-retriever_app
-tests
