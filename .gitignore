@@ -1,0 +1,30 @@
+/.tmp/
+/.env
+credentials.json
+token.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+.venv/
+venv/
+env/
+dist/
+build/
+
+# Test & coverage
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+
+# Linting / tooling caches
+.ruff_cache/
+.mypy_cache/
+
+# OS
+.DS_Store
