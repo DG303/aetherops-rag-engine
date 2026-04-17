@@ -1,0 +1,3 @@
+[console_scripts]
+aetherops-rag-engine-indexer = indexer_app.cli:main
+aetherops-rag-engine-retriever = retriever_app.cli:main

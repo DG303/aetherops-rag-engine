@@ -1,0 +1,16 @@
+/.tmp/
+/.env
+credentials.json
+token.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+htmlcov
+
+# OS
+.DS_Store

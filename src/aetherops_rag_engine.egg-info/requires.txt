@@ -1,0 +1,4 @@
+python-dotenv
+sentence-transformers
+qdrant-client
+GitPython
