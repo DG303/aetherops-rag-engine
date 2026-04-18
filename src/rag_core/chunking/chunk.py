@@ -9,6 +9,7 @@ from rag_core.models.document import Document
 setup_logging()
 logger = logging.getLogger(__name__)
 
+
 def chunk_documents(documents: list[Document]) -> list[Chunk]:
     logger.info("Starting document chunking process")
 
@@ -21,7 +22,12 @@ def chunk_documents(documents: list[Document]) -> list[Chunk]:
     logger.info("Created %s chunks", len(chunks))
     return chunks
 
-def chunk_document(document: Document, chunk_lines: int = config.CHUNK_LINES, chunk_overlap: int = config.CHUNK_OVERLAP) -> list[Chunk]:
+
+def chunk_document(
+    document: Document,
+    chunk_lines: int = config.CHUNK_LINES,
+    chunk_overlap: int = config.CHUNK_OVERLAP,
+) -> list[Chunk]:
     lines = document.content.splitlines()
     chunks = []
     start = 0
@@ -34,7 +40,7 @@ def chunk_document(document: Document, chunk_lines: int = config.CHUNK_LINES, ch
         # the previous chunk's overlap tail).
         if end > total_lines and chunks and chunk_overlap > 0:
             break
-        window = lines[start:min(end, total_lines)]
+        window = lines[start : min(end, total_lines)]
         chunk_text = "\n".join(window)
         chunks.append(
             Chunk(
@@ -50,13 +56,10 @@ def chunk_document(document: Document, chunk_lines: int = config.CHUNK_LINES, ch
             break
         start = end - chunk_overlap
 
-    logger.debug(
-        "Chunked document %s into %s chunks",
-        document.path,
-        len(chunks)
-    )
+    logger.debug("Chunked document %s into %s chunks", document.path, len(chunks))
 
     return chunks
+
 
 def generate_chunk_id(document: Document, chunk_index: int) -> str:
     return f"{document.repo_name}|{document.branch}|{document.path}|{chunk_index}"

@@ -8,8 +8,14 @@ from rag_core.models.retrieval_result import RetrievalResult
 from rag_core.retrieval.retriever import embed_query, get_client, get_model, retrieve
 
 
-def _make_mock_point(repo_name="my-repo", branch="main", source_path="src/main.py",
-                     language="python", content="print('hello')", score=0.95):
+def _make_mock_point(
+    repo_name="my-repo",
+    branch="main",
+    source_path="src/main.py",
+    language="python",
+    content="print('hello')",
+    score=0.95,
+):
     point = MagicMock()
     point.payload = {
         "repo_name": repo_name,
@@ -23,6 +29,7 @@ def _make_mock_point(repo_name="my-repo", branch="main", source_path="src/main.p
 
 
 # --- embed_query ---
+
 
 def test_embed_query_calls_model_encode(monkeypatch):
     """embed_query should delegate to model.encode with normalize_embeddings=True."""
@@ -48,6 +55,7 @@ def test_embed_query_returns_list(monkeypatch):
 
 
 # --- retrieve ---
+
 
 def test_retrieve_returns_retrieval_results(monkeypatch):
     """retrieve should map Qdrant hits to RetrievalResult objects."""
@@ -125,6 +133,7 @@ def test_retrieve_passes_limit_to_qdrant(monkeypatch):
 
 
 # --- lazy initializers ---
+
 
 def test_get_model_returns_same_instance(monkeypatch):
     """get_model should return the same object on repeated calls (singleton)."""

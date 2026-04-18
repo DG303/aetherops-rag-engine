@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 _client = None
 
+
 def get_client() -> QdrantClient:
     global _client
     if _client is None:
@@ -23,15 +24,21 @@ def get_client() -> QdrantClient:
         )
     return _client
 
+
 def _batched(items: list[PointStruct], batch_size: int):
     for i in range(0, len(items), batch_size):
-        yield items[i:i + batch_size]  # pyright: ignore[reportUndefinedVariable]
+        yield items[i : i + batch_size]  # pyright: ignore[reportUndefinedVariable]
+
 
 def store_embeddings(embedded_chunks: list[EmbeddedChunk], client: QdrantClient = None) -> None:
     if client is None:
         client = get_client()
 
-    logger.info("Storing %s embedded chunks in Qdrant collection '%s'", len(embedded_chunks), config.QDRANT_COLLECTION_NAME)
+    logger.info(
+        "Storing %s embedded chunks in Qdrant collection '%s'",
+        len(embedded_chunks),
+        config.QDRANT_COLLECTION_NAME,
+    )
 
     if not embedded_chunks:
         logger.warning("No embedded chunks to store")
@@ -52,12 +59,12 @@ def store_embeddings(embedded_chunks: list[EmbeddedChunk], client: QdrantClient 
                     "source_path": chunk.source_path,
                     "language": chunk.language,
                     "content": chunk.content,
-                }
+                },
             )
         )
 
     batch_size = max(1, config.QDRANT_BATCH_SIZE)
-    total_batches = (len(points) + batch_size -1) // batch_size
+    total_batches = (len(points) + batch_size - 1) // batch_size
 
     for batch_index, batch in enumerate(_batched(points, batch_size), start=1):
         client.upsert(
@@ -71,9 +78,16 @@ def store_embeddings(embedded_chunks: list[EmbeddedChunk], client: QdrantClient 
             len(batch),
         )
 
-    logger.info("Stored %s embedded chunks in Qdrant collection '%s'", len(embedded_chunks), config.QDRANT_COLLECTION_NAME)
+    logger.info(
+        "Stored %s embedded chunks in Qdrant collection '%s'",
+        len(embedded_chunks),
+        config.QDRANT_COLLECTION_NAME,
+    )
 
-def ensure_collection_exists(embedded_chunks: list[EmbeddedChunk], client: QdrantClient = None) -> None:
+
+def ensure_collection_exists(
+    embedded_chunks: list[EmbeddedChunk], client: QdrantClient = None
+) -> None:
     if client is None:
         client = get_client()
 
@@ -86,7 +100,9 @@ def ensure_collection_exists(embedded_chunks: list[EmbeddedChunk], client: Qdran
 
     vector_size = len(embedded_chunks[0].embedding)
 
-    logger.info("Creating collection '%s' with vector size %s", config.QDRANT_COLLECTION_NAME, vector_size)
+    logger.info(
+        "Creating collection '%s' with vector size %s", config.QDRANT_COLLECTION_NAME, vector_size
+    )
 
     client.create_collection(
         collection_name=config.QDRANT_COLLECTION_NAME,
@@ -95,5 +111,6 @@ def ensure_collection_exists(embedded_chunks: list[EmbeddedChunk], client: Qdran
             distance=Distance.COSINE,
         ),
     )
-    logger.info("Created collection '%s' with vector size %s", config.QDRANT_COLLECTION_NAME, vector_size)
-
+    logger.info(
+        "Created collection '%s' with vector size %s", config.QDRANT_COLLECTION_NAME, vector_size
+    )

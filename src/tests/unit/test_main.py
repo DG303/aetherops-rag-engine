@@ -37,6 +37,7 @@ def _patch_pipeline(monkeypatch, docs=None, chunks=None, embedded=None):
 # Tests
 # ---------------------------------------------------------------------------
 
+
 def test_run_indexer_calls_load_repo_files(monkeypatch):
     """load_repo_files should be called with the repo URL and branch."""
     mock_load, _, _, _ = _patch_pipeline(monkeypatch)
@@ -88,7 +89,9 @@ def test_run_indexer_executes_steps_in_order(monkeypatch):
     def fake_embed(*_):
         call_order.append("embed")
         return FAKE_EMBEDDED
-    def fake_store(*_): call_order.append("store")
+
+    def fake_store(*_):
+        call_order.append("store")
 
     monkeypatch.setattr(main_module, "load_repo_files", fake_load)
     monkeypatch.setattr(main_module, "chunk_documents", fake_chunk)
