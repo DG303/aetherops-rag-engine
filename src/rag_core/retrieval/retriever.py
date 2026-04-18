@@ -37,11 +37,15 @@ def retrieve(query: str, limit: int = 5) -> list[RetrievalResult]:
 
     query_vector = embed_query(query)
 
-    results = get_client().query_points(
-        collection_name=config.QDRANT_COLLECTION_NAME,
-        query=query_vector,
-        limit=limit,
-    ).points
+    results = (
+        get_client()
+        .query_points(
+            collection_name=config.QDRANT_COLLECTION_NAME,
+            query=query_vector,
+            limit=limit,
+        )
+        .points
+    )
 
     retrieval_results = []
 

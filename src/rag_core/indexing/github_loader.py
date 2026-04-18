@@ -14,7 +14,9 @@ logger = logging.getLogger(__name__)
 TMP_DIR = ".tmp"
 
 
-def load_repo_files(repo_url: str = config.GITHUB_REPO, branch: str = config.GITHUB_BRANCH) -> list[Document]:
+def load_repo_files(
+    repo_url: str = config.GITHUB_REPO, branch: str = config.GITHUB_BRANCH
+) -> list[Document]:
     repo_name = extract_repo_name(repo_url)
     repo_dir = os.path.join(TMP_DIR, repo_name)
     logger.info(
@@ -175,7 +177,9 @@ def get_git_dependencies():
     return Repo, GitCommandError
 
 
-def is_allowed_extension(path: str, allowed_suffixes: set[str], allowed_filenames: set[str]) -> bool:
+def is_allowed_extension(
+    path: str, allowed_suffixes: set[str], allowed_filenames: set[str]
+) -> bool:
     file_name = os.path.basename(path).lower()
     if file_name in allowed_filenames:
         return True

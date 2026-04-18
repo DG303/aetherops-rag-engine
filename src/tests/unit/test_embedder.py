@@ -12,8 +12,20 @@ def test_embed_chunks_returns_embedded_chunks():
     fake_model.encode.return_value = np.array([[0.1, 0.2, 0.3], [0.4, 0.5, 0.6]])
 
     chunks = [
-        Chunk(repo_name="test-repo", branch="main", source_path="src/tests/test_data/test.txt", language="text", content="line 1 AetherOps RAG Engine testing chunking"),
-        Chunk(repo_name="test-repo", branch="main", source_path="src/tests/test_data/test.txt", language="text", content="line 2 AetherOps RAG Engine testing chunking"),
+        Chunk(
+            repo_name="test-repo",
+            branch="main",
+            source_path="src/tests/test_data/test.txt",
+            language="text",
+            content="line 1 AetherOps RAG Engine testing chunking",
+        ),
+        Chunk(
+            repo_name="test-repo",
+            branch="main",
+            source_path="src/tests/test_data/test.txt",
+            language="text",
+            content="line 2 AetherOps RAG Engine testing chunking",
+        ),
     ]
 
     embedded_chunks = embed_chunks(chunks, fake_model)
@@ -36,6 +48,9 @@ def test_embed_chunks_returns_embedded_chunks():
     assert embedded_chunks[1].content == "line 2 AetherOps RAG Engine testing chunking"
 
     fake_model.encode.assert_called_once_with(
-        ["line 1 AetherOps RAG Engine testing chunking", "line 2 AetherOps RAG Engine testing chunking"],
+        [
+            "line 1 AetherOps RAG Engine testing chunking",
+            "line 2 AetherOps RAG Engine testing chunking",
+        ],
         normalize_embeddings=True,
     )

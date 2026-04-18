@@ -12,14 +12,16 @@ setup_logging()
 logger = logging.getLogger(__name__)
 
 
-#model = SentenceTransformer(config.EMBED_MODEL)
+# model = SentenceTransformer(config.EMBED_MODEL)
 _model = None
+
 
 def get_model() -> SentenceTransformer:
     global _model
     if _model is None:
         _model = SentenceTransformer(config.EMBED_MODEL)
     return _model
+
 
 def embed_chunks(chunks: list[Chunk], model: SentenceTransformer = None) -> list[EmbeddedChunk]:
     logger.info("starting embedding process for %s chunks", len(chunks))

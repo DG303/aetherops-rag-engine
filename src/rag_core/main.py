@@ -10,6 +10,7 @@ from rag_core.storage.qdrant_store import store_embeddings
 setup_logging()
 logger = logging.getLogger(__name__)
 
+
 def run_indexer(repo_url: str, branch: str):
     logger.info("Running indexer for repo '%s' on branch '%s'", repo_url, branch)
 
