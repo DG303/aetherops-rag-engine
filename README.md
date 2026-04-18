@@ -38,6 +38,8 @@ aetherops-rag-engine/
 │   └── tests/              # pytest unit tests (95%+ coverage)
 ├── docker-compose.yml       # Qdrant service
 ├── pyproject.toml
+├── uv.lock                  # reproducible dependency lock file (commit this)
+├── .python-version          # pins Python 3.13 for uv
 ├── pytest.ini
 └── .pre-commit-config.yaml
 ```
@@ -54,24 +56,29 @@ docker compose up -d
 
 Qdrant will be available at `http://localhost:6333`.
 
-### 2. Create and activate a virtual environment
+### 2. Install dependencies with uv
+
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management. If you don't have it yet:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### 3. Install the package
+Then create the virtual environment and install all dependencies in one step:
 
 ```bash
-# Runtime only
-pip install -e .
-
 # Runtime + dev tools (pytest, ruff, pre-commit)
-pip install -e ".[dev]"
+uv sync --extra dev
+
+# Runtime only
+uv sync
 ```
 
-### 4. Configure environment variables
+`uv` reads `.python-version` (pinned to 3.13) and `uv.lock` automatically, so installs are fast and fully reproducible. The `.venv` is created at `aetherops-rag-engine/.venv`.
+
+> **Note:** Do not use `pip install` directly. Use `uv add <package>` to add new dependencies — this keeps `pyproject.toml` and `uv.lock` in sync.
+
+### 3. Configure environment variables
 
 Copy the example below into a `.env` file at the project root and fill in your values:
 
@@ -93,7 +100,7 @@ CHUNK_LINES=30
 CHUNK_OVERLAP=5
 ```
 
-### 5. (Optional) Install pre-commit hooks
+### 4. (Optional) Install pre-commit hooks
 
 ```bash
 pre-commit install
@@ -135,13 +142,13 @@ Each result shows the file path, language, similarity score, and up to 1000 char
 
 ```bash
 # All tests with coverage report
-.venv/bin/pytest src/tests/
+uv run pytest src/tests/
 
 # Single file
-.venv/bin/pytest src/tests/unit/test_chunk.py
+uv run pytest src/tests/unit/test_chunk.py
 
 # With enforced coverage floor
-.venv/bin/pytest src/tests/ --cov-fail-under=90
+uv run pytest src/tests/ --cov-fail-under=90
 ```
 
 See [`src/tests/README.md`](src/tests/README.md) for full test documentation.
@@ -150,13 +157,13 @@ See [`src/tests/README.md`](src/tests/README.md) for full test documentation.
 
 ```bash
 # Check for issues
-.venv/bin/ruff check src/
+uv run ruff check src/
 
 # Auto-fix
-.venv/bin/ruff check src/ --fix
+uv run ruff check src/ --fix
 
 # Format (like black)
-.venv/bin/ruff format src/
+uv run ruff format src/
 ```
 
 ### Run pre-commit manually (without committing)
