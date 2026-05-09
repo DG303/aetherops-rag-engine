@@ -1,6 +1,7 @@
 # AetherOps RAG Engine (Logos)
 
 [![CI](https://github.com/DG303/aetherops-rag-engine/actions/workflows/ci.yml/badge.svg?branch=public)](https://github.com/DG303/aetherops-rag-engine/actions/workflows/ci.yml)
+[![License: Apache 2.0](https://img.shields.io/github/license/DG303/aetherops-rag-engine)](LICENSE)
 
 Codename: Logos.
 
