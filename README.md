@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/DG303/aetherops-rag-engine/actions/workflows/ci.yml/badge.svg?branch=public)](https://github.com/DG303/aetherops-rag-engine/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/github/license/DG303/aetherops-rag-engine)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10%20|%203.11%20|%203.12%20|%203.13-blue)](https://www.python.org)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 Codename: Logos.
 
