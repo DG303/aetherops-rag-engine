@@ -1,6 +1,8 @@
-# AetherOps RAG Engine
+# AetherOps RAG Engine (Logos)
 
-A retrieval-augmented generation (RAG) pipeline that indexes source code from GitHub repositories into a Qdrant vector store and retrieves semantically relevant chunks in response to natural language queries.
+Codename: Logos.
+
+Open-source retrieval and context orchestration for AI-native code + operational knowledge.
 
 ---
 
