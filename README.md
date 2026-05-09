@@ -1,5 +1,7 @@
 # AetherOps RAG Engine (Logos)
 
+[![CI](https://github.com/DG303/aetherops-rag-engine/actions/workflows/ci.yml/badge.svg?branch=public)](https://github.com/DG303/aetherops-rag-engine/actions/workflows/ci.yml)
+
 Codename: Logos.
 
 Open-source retrieval and context orchestration for AI-native code + operational knowledge.
